@@ -25,14 +25,6 @@ absl_log_internal_nullguard = cpp.find_library(
     dirs: ['/usr/local/lib', '/usr/lib'],
     required: true
 )
-lib_path = absl_log_internal_message.get_path()
-if not lib_path.endswith('.so.2508.0.0')
-  error('libabsl_log_internal_nullguard version 2508.0.0 required, found: ' + lib_path)
-endif
-lib_path = absl_log_internal_nullguard.get_path()
-if not lib_path.endswith('.so.2508.0.0')
-  error('libabsl_log_internal_nullguard version 2508.0.0 required, found: ' + lib_path)
-endif
 
 compile_flags = []
 
@@ -47,7 +39,7 @@ if 'Mooncake' in static_plugins
 else
     mooncake_backend_lib = shared_library('Mooncake',
                'mooncake_backend.cpp', 'mooncake_backend.h', 'mooncake_plugin.cpp',
-               dependencies: [nixl_infra, serdes_interface, mooncake_lib, cuda_dep,absl_log_internal_nullguard, absl_log_internal_message],
+               dependencies: [nixl_infra, serdes_interface, mooncake_lib, cuda_dep, absl_log_internal_nullguard, absl_log_internal_message],
                include_directories: [nixl_inc_dirs, utils_inc_dirs],
                install: true,
                cpp_args : compile_flags + ['-fPIC'],
